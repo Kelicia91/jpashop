@@ -7,12 +7,13 @@ import javax.persistence.*
  * (but can solve by allopen plugin - not recommend forcing data-class to open)
  * ***/
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "MEMBERS")
 class Member(
     @Id
     @GeneratedValue // auto
     @Column(name = "MEMBER_ID")
     var id: Long? = null,
+
     var name: String,
     var city: String? = null,
     var street: String? = null,

@@ -3,12 +3,13 @@ package jpashop.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "ITEM")
+@Table(name = "ITEMS")
 class Item(
     @Id
     @GeneratedValue
     @Column(name = "ITEM_ID")
-    var id: Long?,
+    var id: Long? = null,
+
     var name: String,
     var price: Int,
     var stockQuantity: Int

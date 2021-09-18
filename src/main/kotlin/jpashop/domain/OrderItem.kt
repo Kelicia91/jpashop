@@ -3,18 +3,21 @@ package jpashop.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "ORDER_ITEM")
+@Table(name = "ORDERS_ITEMS")
 class OrderItem(
     @Id
     @GeneratedValue
     @Column(name = "ORDER_ITEM_ID")
-    var id: Long?,
+    var id: Long? = null,
+
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
     val order: Order,
+
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
     val item: Item,
+
     val orderPrice: Int,
     val count: Int
 ) {

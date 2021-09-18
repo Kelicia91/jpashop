@@ -1,19 +1,17 @@
 package jpashop.domain
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 /*** warn: kotlin <=> hibernate
  * data class can't be open, so hibernate can't generate proxies for lazy-loading
  * (but can solve by allopen plugin - not recommend forcing data-class to open)
  * ***/
 @Entity
-@Table(name = "members")
+@Table(name = "MEMBER")
 class Member(
     @Id
     @GeneratedValue // auto
+    @Column(name = "MEMBER_ID")
     var id: Long? = null,
     var name: String,
     var city: String? = null,

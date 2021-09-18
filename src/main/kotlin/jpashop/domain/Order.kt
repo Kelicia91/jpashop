@@ -5,12 +5,15 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "orders")
+@Table(name = "ORDER")
 class Order(
     @Id
     @GeneratedValue // auto
+    @Column(name = "ORDER_ID")
     var id: Long?,
-    val memberId: Long,
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    val member: Member,
     @CreationTimestamp
     var createdAt: LocalDateTime,
     @Enumerated(EnumType.STRING)
@@ -30,6 +33,6 @@ class Order(
     }
 
     override fun toString(): String {
-        return "Order(id=$id, memberId=$memberId, createdAt=$createdAt, status=$status)"
+        return "Order(id=$id, memberId=${member.id}, createdAt=$createdAt, status=$status)"
     }
 }

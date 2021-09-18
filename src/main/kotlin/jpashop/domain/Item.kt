@@ -1,15 +1,13 @@
 package jpashop.domain
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table(name = "items")
+@Table(name = "ITEM")
 class Item(
     @Id
     @GeneratedValue
+    @Column(name = "ITEM_ID")
     var id: Long?,
     var name: String,
     var price: Int,

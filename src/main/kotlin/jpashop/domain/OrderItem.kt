@@ -1,18 +1,20 @@
 package jpashop.domain
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table(name = "orders_items")
+@Table(name = "ORDER_ITEM")
 class OrderItem(
     @Id
     @GeneratedValue
+    @Column(name = "ORDER_ITEM_ID")
     var id: Long?,
-    val orderId: Long,
-    val itemId: Long,
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    val order: Order,
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID")
+    val item: Item,
     val orderPrice: Int,
     val count: Int
 ) {
@@ -30,6 +32,6 @@ class OrderItem(
     }
 
     override fun toString(): String {
-        return "OrderItem(id=$id, orderId=$orderId, itemId=$itemId, orderPrice=$orderPrice, count=$count)"
+        return "OrderItem(id=$id, orderId=${order.id}, itemId=${item.id}, orderPrice=$orderPrice, count=$count)"
     }
 }

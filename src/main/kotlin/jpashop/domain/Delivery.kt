@@ -2,32 +2,34 @@ package jpashop.domain
 
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToOne
 import javax.persistence.Table
 
-/*** warn: kotlin <=> hibernate
- * data class can't be open, so hibernate can't generate proxies for lazy-loading
- * (but can solve by allopen plugin - not recommend forcing data-class to open)
- * ***/
 @Entity
-@Table(name = "MEMBERS")
-class Member(
+@Table(name = "DELIVERIES")
+class Delivery(
     @Id
-    @GeneratedValue // auto
-    @Column(name = "MEMBER_ID")
+    @GeneratedValue
+    @Column(name = "DELIVERY_ID")
     var id: Long? = null,
 
-    var name: String,
+    @Enumerated(EnumType.STRING)
+    var status: DeliveryStatus = DeliveryStatus.NONE,
+
+    @OneToOne(mappedBy = "delivery")
+    val order: Order? = null,
+
     var city: String? = null,
     var street: String? = null,
     var zipcode: String? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Member
+        if (other !is Delivery) return false
 
         if (id != other.id) return false
 
@@ -39,6 +41,6 @@ class Member(
     }
 
     override fun toString(): String {
-        return "Member(id=$id, name='$name', city=$city, street=$street, zipcode=$zipcode)"
+        return "Delivery(id=$id, status=$status, order=${order?.id}, city=$city, street=$street, zipcode=$zipcode)"
     }
 }

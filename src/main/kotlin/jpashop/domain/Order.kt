@@ -2,7 +2,17 @@ package jpashop.domain
 
 import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
+import javax.persistence.OneToOne
+import javax.persistence.Table
 
 @Entity
 @Table(name = "ORDERS")
@@ -18,6 +28,10 @@ class Order(
 
     @OneToMany(mappedBy = "order")
     val orderItems: MutableList<OrderItem> = mutableListOf(),
+
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    var delivery: Delivery,
 
     @Enumerated(EnumType.STRING)
     var status: OrderStatus = OrderStatus.ORDER,
@@ -43,6 +57,6 @@ class Order(
     }
 
     override fun toString(): String {
-        return "Order(id=$id, member=${member.id}, orderItems.size=${orderItems.size}, status=$status, createdAt=$createdAt)"
+        return "Order(id=$id, member=${member.id}, orderItems.size=${orderItems.size}, delivery=${delivery.id}, status=$status, createdAt=$createdAt)"
     }
 }

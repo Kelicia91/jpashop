@@ -10,6 +10,9 @@ class Item(
     @Column(name = "ITEM_ID")
     var id: Long? = null,
 
+    @ManyToMany(mappedBy = "items")
+    val categories: MutableList<Category> = mutableListOf(),
+
     var name: String,
     var price: Int,
     var stockQuantity: Int

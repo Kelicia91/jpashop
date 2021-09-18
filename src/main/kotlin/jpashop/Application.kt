@@ -1,12 +1,7 @@
 package jpashop
 
 import jpashop.domain.Book
-import jpashop.domain.Delivery
-import jpashop.domain.Item
-import jpashop.domain.Member
 import jpashop.domain.Movie
-import jpashop.domain.Order
-import jpashop.domain.OrderItem
 import javax.persistence.EntityManager
 import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence

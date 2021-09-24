@@ -2,6 +2,7 @@ package jpashop.domain
 
 import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -27,10 +28,10 @@ class Order(
     @JoinColumn(name = "MEMBER_ID")
     val member: Member,
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     val orderItems: MutableList<OrderItem> = mutableListOf(),
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "DELIVERY_ID")
     var delivery: Delivery,
 

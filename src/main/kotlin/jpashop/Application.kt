@@ -19,7 +19,6 @@ fun main() {
     tx.begin()
     try {
         val delivery = Delivery()
-        em.persist(delivery)
 
         val member = Member(name = "m1")
         em.persist(member)
@@ -31,7 +30,7 @@ fun main() {
         em.clear()
         val foundOrder = em.find(Order::class.java, order.id) // lazy-loading delivery, member
 
-        println(foundOrder)
+        println(foundOrder) // Order(id=2, member=1, orderItems.size=0, delivery=3, status=ORDER, createdAt=2021-09-24T21:00:51.368)
     } catch (e: Exception) {
         tx.rollback()
     } finally {

@@ -4,6 +4,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToOne
@@ -20,7 +21,7 @@ class Delivery(
     @Enumerated(EnumType.STRING)
     var status: DeliveryStatus = DeliveryStatus.NONE,
 
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     val order: Order? = null,
 
     var city: String? = null,

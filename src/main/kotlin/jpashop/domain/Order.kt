@@ -6,6 +6,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.JoinColumn
@@ -22,14 +23,14 @@ class Order(
     @Column(name = "ORDER_ID")
     var id: Long? = null,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     val member: Member,
 
     @OneToMany(mappedBy = "order")
     val orderItems: MutableList<OrderItem> = mutableListOf(),
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DELIVERY_ID")
     var delivery: Delivery,
 

@@ -1,7 +1,10 @@
 package jpashop
 
 import jpashop.domain.Book
+import jpashop.domain.Delivery
+import jpashop.domain.Member
 import jpashop.domain.Movie
+import jpashop.domain.Order
 import javax.persistence.EntityManager
 import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence
@@ -15,19 +18,20 @@ fun main() {
     val tx = em.transaction
     tx.begin()
     try {
-        val book = Book(name = "jpa", price = 340000, stockQuantity = 10, author = "kim", isbn = "isbn")
-        em.persist(book)
+        val delivery = Delivery()
+        em.persist(delivery)
 
-        val movie = Movie(name = "autumn", price = 8000, stockQuantity = 0, director = "hong")
-        em.persist(movie)
+        val member = Member(name = "m1")
+        em.persist(member)
+        val order = Order(member = member, delivery = delivery)
+        em.persist(order)
 
-        println("[book] before flush: $book") // Book(isbn='isbn', author='kim') Item(id=1, categories=[], name='jpa', price=340000, stockQuantity=10, createdAt=null, updatedAt=null)
-        println("[movie] before flush: $movie") // Movie(director='hong') Item(id=2, categories=[], name='autumn', price=8000, stockQuantity=0, createdAt=null, updatedAt=null)
-        em.flush()
-        println("[book] after flush: $book") // Book(isbn='isbn', author='kim') Item(id=1, categories=[], name='jpa', price=340000, stockQuantity=10, createdAt=2021-09-19T00:34:52.336, updatedAt=2021-09-19T00:34:52.336)
-        println("[movie] after flush: $movie") // Movie(director='hong') Item(id=2, categories=[], name='autumn', price=8000, stockQuantity=0, createdAt=2021-09-19T00:34:52.385, updatedAt=2021-09-19T00:34:52.385)
+        tx.commit()
 
-        tx.commit() // insert items,book & items,movie (InheritanceType.JOINED)
+        em.clear()
+        val foundOrder = em.find(Order::class.java, order.id) // lazy-loading delivery, member
+
+        println(foundOrder)
     } catch (e: Exception) {
         tx.rollback()
     } finally {

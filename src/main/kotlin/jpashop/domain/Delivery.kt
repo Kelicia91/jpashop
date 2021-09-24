@@ -1,6 +1,7 @@
 package jpashop.domain
 
 import javax.persistence.Column
+import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
@@ -24,9 +25,8 @@ class Delivery(
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     val order: Order? = null,
 
-    var city: String? = null,
-    var street: String? = null,
-    var zipcode: String? = null
+    @Embedded
+    var address: Address? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -42,6 +42,6 @@ class Delivery(
     }
 
     override fun toString(): String {
-        return "Delivery(id=$id, status=$status, order=${order?.id}, city=$city, street=$street, zipcode=$zipcode)"
+        return "Delivery(id=$id, status=$status, order=${order?.id}, address=${address.toString()})"
     }
 }

@@ -1,5 +1,6 @@
 package jpashop
 
+import jpashop.domain.Address
 import jpashop.domain.Book
 import jpashop.domain.Delivery
 import jpashop.domain.Member
@@ -18,19 +19,21 @@ fun main() {
     val tx = em.transaction
     tx.begin()
     try {
-        val delivery = Delivery()
+        val delivery = Delivery(address = Address(city="c1", street = "s1", zipcode = "123"))
 
         val member = Member(name = "m1")
         em.persist(member)
         val order = Order(member = member, delivery = delivery)
         em.persist(order)
 
-        tx.commit()
-
+        em.flush() // insert members, deliveries, orders
         em.clear()
-        val foundOrder = em.find(Order::class.java, order.id) // lazy-loading delivery, member
 
-        println(foundOrder) // Order(id=2, member=1, orderItems.size=0, delivery=3, status=ORDER, createdAt=2021-09-24T21:00:51.368)
+        val foundOrder = em.find(Order::class.java, order.id) // select order only (lazy-loading delivery, member)
+        println(foundOrder.member) // select & Member(id=1, name='m1', address=null)
+        println(foundOrder.delivery) // select & Delivery(id=3, status=NONE, order=2, address=Address(city=c1, street=s1, zipcode=123))
+
+        tx.commit()
     } catch (e: Exception) {
         tx.rollback()
     } finally {

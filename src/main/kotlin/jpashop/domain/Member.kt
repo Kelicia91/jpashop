@@ -1,6 +1,7 @@
 package jpashop.domain
 
 import javax.persistence.Column
+import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -19,9 +20,9 @@ class Member(
     var id: Long? = null,
 
     var name: String,
-    var city: String? = null,
-    var street: String? = null,
-    var zipcode: String? = null
+
+    @Embedded
+    var address: Address? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -39,6 +40,6 @@ class Member(
     }
 
     override fun toString(): String {
-        return "Member(id=$id, name='$name', city=$city, street=$street, zipcode=$zipcode)"
+        return "Member(id=$id, name='$name', address=${address.toString()})"
     }
 }
